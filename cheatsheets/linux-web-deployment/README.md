@@ -32,7 +32,8 @@ To avoid potential performance issues in the future, you can [configure memory s
 
 - Install a web server: [Caddy](https://caddyserver.com/docs/install#debian-ubuntu-raspbian) will allow HTTPS requests without any configuration
 - Set up reverse proxy in Caddy configuration: `sudo vim /etc/caddy/Caddyfile`
+- Set up request [log output in Caddy configuration](https://caddyserver.com/docs/caddyfile/directives/log#output-modules)
 - Update DNS records so that requests to your domain are forwarded to your server (then [make sure DNS servers have been updated](https://dnschecker.org))
 - Reload Caddy : `systemctl reload caddy`
 - Reboot server (`sudo reboot`) and make sure your web app also restarts (systemd services must be enabled, Docker containers run with `restart: always`)
-- You can now review Caddy access logs in human-readable format: `journalctl -u caddy --since=today -f -o short-iso --output-fields=MESSAGE | GREP_COLOR='mt=01;33' grep -E --color=always "[0-9]{4}-[01][0-9]-[0-3][0-9]T[0-2][0-9]:[0-5][0-9]:[0-5][0-9]" | grep -E --color=always "\"method[^,]*|\"uri[^,]*" | GREP_COLOR='mt=01;33'  grep -P --color=always "\"User-Agent\":\[(.*?)\]"`
+- You can now review Caddy access logs in human-readable format: `journalctl -u caddy --since=today -f -o short-iso | GREP_COLOR='mt=01;33' grep -E --color=always "[0-9]{4}-[01][0-9]-[0-3][0-9]T[0-2][0-9]:[0-5][0-9]:[0-5][0-9]" | grep -E --color=always "\"method[^,]*|\"uri[^,]*" | GREP_COLOR='mt=01;33'  grep -P --color=always "\"User-Agent\":\[(.*?)\]"`
