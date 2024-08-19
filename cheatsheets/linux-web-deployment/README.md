@@ -2,7 +2,7 @@
 
 Before deploying your app, [make sure it is ready for production ](/cheatsheets/prepare-web-app-production/README.md).
 
-_Tested on Ubuntu 22.04:_
+_Tested on Ubuntu 24.04:_
 
 ## Make server secure
 
@@ -17,7 +17,7 @@ _Tested on Ubuntu 22.04:_
 - [Set up firewall](/cheatsheets/set-up-ufw-firewall-linux-web/README.md)
 - Optionally, you can [set an SSH key](https://www.digitalocean.com/community/tutorials/how-to-configure-ssh-key-based-authentication-on-a-linux-server) on your local terminal to log in passwordless
 
-To avoid potential performance issues in the future, you can [configure memory swap](https://www.digitalocean.com/community/tutorials/how-to-add-swap-space-on-ubuntu-22-04) now, or when memory usage starts running high.
+To avoid potential performance issues in the future, you can [configure memory swap](https://wiki.crowncloud.net/?How_to_Add_Swap_Space_on_Ubuntu_24_04) now, or when memory usage starts running high.
 
 ## Install dependencies and run app
 
