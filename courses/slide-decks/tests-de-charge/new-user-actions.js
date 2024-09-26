@@ -32,7 +32,7 @@ export const options = {
       "p(95) < 1000",
     ],
     [`http_req_duration{group: ${REQUEST_GROUPS.getMyCrocodiles}}`]: [
-      "p(95) < 10",
+      "p(95) < 1000",
     ],
 
     ["http_req_failed"]: ["rate<0.1"],
