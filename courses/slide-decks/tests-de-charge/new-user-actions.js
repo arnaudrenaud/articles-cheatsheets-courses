@@ -26,11 +26,16 @@ export const REQUEST_GROUPS = {
 
 export const options = {
   thresholds: {
-    [`http_req_duration{group: ${REQUEST_GROUPS.register}}`]: [],
-    [`http_req_duration{group: ${REQUEST_GROUPS.login}}`]: [],
-    [`http_req_duration{group: ${REQUEST_GROUPS.createCrocodile}}`]: [],
-    [`http_req_duration{group: ${REQUEST_GROUPS.getMyCrocodiles}}`]: [],
+    [`http_req_duration{group: ${REQUEST_GROUPS.register}}`]: ["p(95) < 5000"],
+    [`http_req_duration{group: ${REQUEST_GROUPS.login}}`]: ["p(95) < 5000"],
+    [`http_req_duration{group: ${REQUEST_GROUPS.createCrocodile}}`]: [
+      "p(95) < 1000",
+    ],
+    [`http_req_duration{group: ${REQUEST_GROUPS.getMyCrocodiles}}`]: [
+      "p(95) < 10",
+    ],
 
+    ["http_req_failed"]: ["rate<0.1"],
     [`http_req_failed{group: ${REQUEST_GROUPS.register}}`]: [],
     [`http_req_failed{group: ${REQUEST_GROUPS.login}}`]: [],
     [`http_req_failed{group: ${REQUEST_GROUPS.createCrocodile}}`]: [],
