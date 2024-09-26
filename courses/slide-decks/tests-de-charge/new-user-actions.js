@@ -17,28 +17,65 @@ function getRandomUserInfo() {
   return me;
 }
 
+export const REQUEST_GROUPS = {
+  register: "01 – ✍️ Register",
+  login: "02 – 👋 Login",
+  createCrocodile: "03 – 🐊 Create crocodile",
+  getMyCrocodiles: "04 – 📋 Get my crocodiles",
+};
+
+export const options = {
+  thresholds: {
+    [`http_req_duration{group: ${REQUEST_GROUPS.register}}`]: [],
+    [`http_req_duration{group: ${REQUEST_GROUPS.login}}`]: [],
+    [`http_req_duration{group: ${REQUEST_GROUPS.createCrocodile}}`]: [],
+    [`http_req_duration{group: ${REQUEST_GROUPS.getMyCrocodiles}}`]: [],
+
+    [`http_req_failed{group: ${REQUEST_GROUPS.register}}`]: [],
+    [`http_req_failed{group: ${REQUEST_GROUPS.login}}`]: [],
+    [`http_req_failed{group: ${REQUEST_GROUPS.createCrocodile}}`]: [],
+    [`http_req_failed{group: ${REQUEST_GROUPS.getMyCrocodiles}}`]: [],
+  },
+};
+
 // Run test-api.k6.io locally for better reliability: https://github.com/grafana/test-api.k6.io
 const BASE_URL = "http://localhost:8000";
 
 export default function () {
   const me = getRandomUserInfo();
 
-  http.post(`${BASE_URL}/user/register/`, me);
-  sleep(1);
-
-  http.post(`${BASE_URL}/auth/cookie/login/`, {
-    username: me.username,
-    password: me.password,
+  http.post(`${BASE_URL}/user/register/`, me, {
+    tags: { group: REQUEST_GROUPS.register },
   });
   sleep(1);
 
-  http.post(`${BASE_URL}/my/crocodiles/`, {
-    name: "Cyril",
-    sex: "M",
-    date_of_birth: "2021-09-26",
-  });
+  http.post(
+    `${BASE_URL}/auth/cookie/login/`,
+    {
+      username: me.username,
+      password: me.password,
+    },
+    {
+      tags: { group: REQUEST_GROUPS.login },
+    }
+  );
   sleep(1);
 
-  http.get(`${BASE_URL}/my/crocodiles/`);
+  http.post(
+    `${BASE_URL}/my/crocodiles/`,
+    {
+      name: "Cyril",
+      sex: "M",
+      date_of_birth: "2021-09-26",
+    },
+    {
+      tags: { group: REQUEST_GROUPS.createCrocodile },
+    }
+  );
+  sleep(1);
+
+  http.get(`${BASE_URL}/my/crocodiles/`, {
+    tags: { group: REQUEST_GROUPS.getMyCrocodiles },
+  });
   sleep(1);
 }
