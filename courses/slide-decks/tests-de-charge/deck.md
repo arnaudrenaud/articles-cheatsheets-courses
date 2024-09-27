@@ -208,6 +208,8 @@ Relancer le test :
 On constate que chaque ligne de résultat est précédée par ✓ ou ✗ en fonction de la validation du seuil ou non.
 Si au moins l'un des seuils de réussite n'est pas atteint, le programme finit en erreur.
 
+<!-- Le code de sortie du programme de test pourra être exploité dans un processus automatisé pour annoncer la réussite ou l'échec du test -->
+
 ---
 
 ## Utilisation dans le projet Secure GenAI
